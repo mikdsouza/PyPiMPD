@@ -24,6 +24,30 @@ class MPDCli:
         self.__tryConnect()
         return self.client.currentsong()
 
+    def getCurrentStatus(self):
+        self.__tryConnect()
+        return self.client.status()
+
     def play(self):
         self.__tryConnect()
         self.client.pause()
+        return self.client.status()
+
+    def stop(self):
+        self.__tryConnect()
+        self.client.stop()
+        return self.client.status()
+
+    def prev(self):
+        self.__tryConnect()
+        self.client.previous()
+        return self.client.status()
+
+    def next(self):
+        self.__tryConnect()
+        self.client.next()
+        return self.client.status()
+
+    def idle(self):
+        self.__tryConnect()
+        self.client.idle()
