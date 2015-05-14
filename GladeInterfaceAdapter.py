@@ -105,9 +105,15 @@ except:
     print("GTK Not Availible")
     sys.exit(1)
 
+hostname = 'localhost'
+args = sys.argv
+
+if len(args) > 1:
+    hostname = args[1]
+
 builder = Gtk.Builder()
 builder.add_from_file("MainWindow.glade")
-builder.connect_signals(Handler(builder, '192.168.0.3'))
+builder.connect_signals(Handler(builder, hostname))
 
 window = builder.get_object("MainWindow")
 window.show_all()
