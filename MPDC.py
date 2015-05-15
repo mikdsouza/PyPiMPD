@@ -6,6 +6,7 @@ class MPDCli:
         self.client.timeout = 10
         self.client.idletimeout = None
         self.client.connect(ipaddress, 6600)
+        self.client.consume(0)
 
         self.ip = ipaddress
 
@@ -30,7 +31,14 @@ class MPDCli:
 
     def play(self):
         self.__tryConnect()
-        self.client.pause()
+
+        currentState = self.client.status()['state']
+
+        if currentState == 'stop':
+            self.client.play(int(self.client.status()['song']))
+        else:
+            self.client.pause()
+
         return self.client.status()
 
     def stop(self):

@@ -87,7 +87,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
-                    <property name="label" translatable="yes">--:--</property>
+                    <property name="label" translatable="yes">--:--/--:--</property>
                     <property name="angle">0.019999999552965164</property>
                   </object>
                   <packing>
@@ -116,26 +116,36 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <placeholder/>
+              <object class="GtkProgressBar" id="pbTrack">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
               <object class="GtkBox" id="box2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="vexpand">False</property>
+                <property name="spacing">3</property>
+                <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkButton" id="bPrev">
                     <property name="label">gtk-media-previous</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="relief">none</property>
                     <property name="use_stock">True</property>
                     <property name="image_position">top</property>
                     <property name="always_show_image">True</property>
                     <signal name="clicked" handler="prevClick" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
@@ -153,7 +163,7 @@
                     <signal name="clicked" handler="stopClick" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
@@ -170,7 +180,7 @@
                     <signal name="clicked" handler="playClick" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">2</property>
                   </packing>
@@ -187,7 +197,7 @@
                     <signal name="clicked" handler="nextClick" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">3</property>
                   </packing>

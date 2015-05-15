@@ -1,4 +1,5 @@
 import sys
+import time
 import threading
 import MPDC
 
@@ -19,48 +20,57 @@ class Updater(threading.Thread):
 
     def run(self):
         while True:
-            if not self.firstTime:
-                self.mpdc.idle()
+            try:
+                if not self.firstTime:
+                    # self.mpdc.idle()
+                    time.sleep(1)
 
-            self.firstTime = False
+                self.firstTime = False
 
-            with guiLock:
-                nowPlaying = self.mpdc.getNowPlaying()
+                with guiLock:
+                    nowPlaying = self.mpdc.getNowPlaying()
 
-                #Show all the usual info
-                songTitle = self.builder.get_object("lSongTitle")
-                songTitle.set_text(nowPlaying['title'])
+                    #Show all the usual info
+                    songTitle = self.builder.get_object("lSongTitle")
+                    songTitle.set_text(nowPlaying['title'])
 
-                print(nowPlaying)
+                    print(nowPlaying)
 
-                artist = self.builder.get_object("lArtist")
-                artist.set_text(nowPlaying['artist'])
+                    artist = self.builder.get_object("lArtist")
+                    artist.set_text(nowPlaying['artist'])
 
-                album = self.builder.get_object("lAlbum")
-                album.set_text(nowPlaying['album'])
+                    album = self.builder.get_object("lAlbum")
+                    album.set_text(nowPlaying['album'])
 
-                totalM, totalS = divmod(int(nowPlaying['time']), 60)
-                totalTime = "%02d:%02d" % (totalM, totalS)
+                    totalM, totalS = divmod(int(nowPlaying['time']), 60)
+                    totalTime = "%02d:%02d" % (totalM, totalS)
 
-                length = self.builder.get_object("lLength")
-                length.set_text(totalTime)
+                    length = self.builder.get_object("lLength")
+                    # length.set_text(totalTime)
 
-                #Decide what to do with the play pause thing
-                currentStatus = self.mpdc.getCurrentStatus()
-                print(currentStatus)
+                    #Decide what to do with the play pause thing
+                    currentStatus = self.mpdc.getCurrentStatus()
+                    print(currentStatus)
 
-                if currentStatus['state'] == 'play':
-                    button = self.builder.get_object('bPlay')
-                    # button.set_image(self.pauseImage)
-                    button.set_label("Pause")
-                else:
-                    button = self.builder.get_object('bPlay')
-                    # button.set_image(self.playImage)
-                    button.set_label("Play")
+                    if currentStatus['state'] == 'play':
+                        button = self.builder.get_object('bPlay')
+                        # button.set_image(self.pauseImage)
+                        button.set_label("Pause")
+                    else:
+                        button = self.builder.get_object('bPlay')
+                        # button.set_image(self.playImage)
+                        button.set_label("Play")
 
-                # currentSeconds = float(currentStatus['elapsed'])
-                # Track = self.builder.get_object('pbTrack')
-                # Track.set_fraction(currentSeconds / (totalM * 60 + totalS))
+                    currentSeconds = float(currentStatus['elapsed'])
+                    Track = self.builder.get_object('pbTrack')
+                    Track.set_fraction(currentSeconds / (totalM * 60 + totalS))
+
+                    currentM, currentS = divmod(int(currentSeconds), 60)
+                    currentTime = "%02d:%02d" % (currentM, currentS)
+                    length.set_text(currentTime + '/' + totalTime)
+            except: # Blanket exception (for now)
+                print('Exception thrown: ')
+
 
 class Handler:
 
