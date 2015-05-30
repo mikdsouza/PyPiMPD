@@ -22,8 +22,8 @@ class Updater(threading.Thread):
         while True:
             try:
                 if not self.firstTime:
-                    # self.mpdc.idle()
-                    time.sleep(1)
+                    self.mpdc.idle()
+                    #time.sleep(1)
 
                 self.firstTime = False
 
@@ -110,11 +110,12 @@ except:
     pass
 
 try:
-    from gi.repository import Gtk
+    from gi.repository import Gtk,GObject
 except:
     print("GTK Not Availible")
     sys.exit(1)
 
+GObject.threads_init()
 hostname = 'localhost'
 args = sys.argv
 
